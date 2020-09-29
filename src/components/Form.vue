@@ -57,10 +57,6 @@ export default {
         if (inputName == "chief") object.chief = value;
       }
 
-      // object.chief != ""
-      //   ? (object.hasChildren = true)
-      //   : (object.hasChildren = false);
-
       object.children = [];
 
       localArr.push(object);

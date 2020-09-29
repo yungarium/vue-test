@@ -9,10 +9,10 @@
     </div>
 
     <ul v-show="open">
-      <TableItemNode
+      <TableItem
         v-for="(item, index) in data.children"
         :key="index"
-        :data="item[index]"
+        :data="item[0]"
       />
     </ul>
   </li>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "TableItemNode",
+  name: "TableItem",
   props: {
     data: Object,
   },
