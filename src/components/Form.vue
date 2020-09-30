@@ -48,19 +48,17 @@ export default {
 
       const form = e.target;
       const formData = new FormData(form);
-      let localArr = [];
-      let object = {};
+      let newPerson = {};
 
       for (const [inputName, value] of formData) {
-        if (inputName == "name") object.name = value;
-        if (inputName == "phone") object.phone = value;
-        if (inputName == "chief") object.chief = value;
+        if (inputName == "name") newPerson.name = value;
+        if (inputName == "phone") newPerson.phone = value;
+        if (inputName == "chief") newPerson.chief = value;
       }
 
-      object.children = [];
+      newPerson.children = [];
 
-      localArr.push(object);
-      this.$emit("onSubmit", localArr);
+      this.$emit("onSubmit", newPerson);
       event.target.reset();
     },
   },

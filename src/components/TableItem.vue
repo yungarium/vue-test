@@ -12,7 +12,7 @@
       <TableItem
         v-for="(item, index) in data.children"
         :key="index"
-        :data="item[0]"
+        :data="item"
       />
     </ul>
   </li>

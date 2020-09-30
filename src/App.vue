@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <div class="block">
-      <AddButton @openModal="omFunc" />
-      <Table :data="peopleArr" />
+      <AddButton @openModal="isModalOpen" />
+      <Table :data="people" />
     </div>
     <div class="block">
       <Form
         :isActive="show"
-        @openModal="omFunc"
+        @openModal="isModalOpen"
         @onSubmit="onSubmitForm"
-        :data="peopleNamesArr"
+        :data="peopleNames"
       />
     </div>
   </div>
@@ -27,32 +27,28 @@ export default {
     Form,
   },
   methods: {
-    omFunc(data) {
+    isModalOpen(data) {
       this.show = data;
     },
-    onSubmitForm(arr) {
-      // проверяем есть ли шеф
-      if (arr[0].chief) {
-        // находим индекс по имени
-        let insertAtIndex = this.peopleArr.findIndex(
-          (x) => x.name === arr[0].chief
+    onSubmitForm(newPerson) {
+      if (newPerson.chief) {
+        let insertAtIndex = this.people.findIndex(
+          (x) => x.name === newPerson.chief
         );
-        this.peopleArr[insertAtIndex].children.push(arr);
-        console.log(this.peopleArr[insertAtIndex]);
+        this.people[insertAtIndex].children.push(newPerson);
       } else {
-        // если нет шефа просто добавляем в конец
-        this.peopleArr = this.peopleArr.concat(arr);
+        this.people.push(newPerson);
       }
 
       this.getNames();
       this.saveToLocalStorage();
     },
     saveToLocalStorage() {
-      const parsed = JSON.stringify(this.peopleArr);
-      localStorage.setItem("peopleArr", parsed);
+      const parsed = JSON.stringify(this.people);
+      localStorage.setItem("people", parsed);
     },
     getNames() {
-      this.peopleNamesArr = this.peopleArr.filter(function (item) {
+      this.peopleNames = this.people.filter(function (item) {
         return item.name;
       });
     },
@@ -60,17 +56,17 @@ export default {
   data() {
     return {
       show: false,
-      peopleArr: [],
-      peopleNamesArr: [],
+      people: [],
+      peopleNames: [],
     };
   },
   mounted() {
-    if (localStorage.getItem("peopleArr")) {
+    if (localStorage.getItem("people")) {
       try {
-        this.peopleArr = JSON.parse(localStorage.getItem("peopleArr"));
+        this.people = JSON.parse(localStorage.getItem("people"));
         this.getNames();
       } catch (e) {
-        localStorage.removeItem("peopleArr");
+        localStorage.removeItem("people");
       }
     }
   },
